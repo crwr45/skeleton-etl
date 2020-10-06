@@ -27,8 +27,7 @@ class Transfer:
     # TODO: relations to messages created, and to issues raised
 
     def raise_issue(self, msg):
-        # TODO log error
-        print(msg)
+        _logger.error(f"Transfer Issue: {msg}")
 
     def do_transfer(self, connection):
         _logger.info(f"{self} transfer complete")
