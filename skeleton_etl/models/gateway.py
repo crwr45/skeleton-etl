@@ -2,6 +2,8 @@ from dataclasses import dataclass, field
 from typing import Any, List, Union
 
 from .transfer import Transfer
+from ..stores.abstract import AbstractStore
+from ..stores.memory import InMemoryStore
 
 
 @dataclass
@@ -10,11 +12,12 @@ class Gateway:
     Describes a place from which messages can be obtained.
     TODO more
     """
+
     path: str
     address: Union[str, None]
     connection_type: Any
     message_selection_policy: Any
-    transfers: List[Transfer] = field(default_factory=list)
+    transfers: AbstractStore = field(default_factory=InMemoryStore)
 
     # TODO: auth for types that need it.
     # TODO: Odoo EDI has the concept of multiple paths for a single gateway. Consider
@@ -31,7 +34,7 @@ class Gateway:
         consistency requirements and implications.
         """
         transfer = Transfer(self)
-        self.transfers.append(transfer)
+        self.transfers.add(transfer)
         try:
             Connection = self.connection_type
             conn = Connection.connect(self)
