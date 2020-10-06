@@ -6,8 +6,11 @@ from .message import Message
 from ..message_types.product_demo import ProductMessage
 
 from ..message_types import type_registry
+from ..stores.abstract import AbstractStore
+from ..stores.memory import InMemoryStore
 
 import logging
+
 _logger = logging.getLogger(__name__)
 
 
@@ -16,8 +19,9 @@ class Transfer:
     """
     Records a single connection and its outcome(s)
     """
+
     gateway: Any
-    messages: List[Message] = field(default_factory=list)
+    messages: AbstractStore = field(default_factory=InMemoryStore)
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
     # TODO: relations to messages created, and to issues raised
@@ -42,5 +46,5 @@ class Transfer:
         for message in Connection.receive_inputs(connection, self.gateway.path, SelectionPolicy):
             message.type = type_registry.find_type_for_message(message)
             _logger.debug(f"Determined type {message.type} for message {message.name}")
-            self.messages.append(message)
+            self.messages.add(message)
         _logger.debug(f"transfer at {self.timestamp} got {len(self.messages)} new messages")
