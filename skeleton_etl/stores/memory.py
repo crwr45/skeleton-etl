@@ -26,9 +26,13 @@ class InMemoryStore(AbstractStore):
     def remove(self, key):
         self._store.pop(key, None)
 
+    def dump(self):
+        return list(self)
+
     def load(self, values: list):
         for v in values:
             self.add(v)
 
     def save(self):
-        return list(self)
+        """For in memory store there is no need to save anything"""
+        pass
