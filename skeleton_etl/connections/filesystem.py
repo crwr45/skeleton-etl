@@ -1,18 +1,36 @@
 import pathlib
 import hashlib
+from dataclasses import dataclass, field
+from typing import Union
 
 from ..models.message import Message
+from .abstract import Connection
 
 import logging
 
 _logger = logging.getLogger(__name__)
 
 
-class LocalFilesystemConnection:
-    @staticmethod
-    def connect(_gateway):
+@dataclass
+class LocalFilesystemConnectionSettings:
+
+    root_path: Union[str, pathlib.Path, None] = field(default=None)
+
+
+class LocalFilesystemConnection(Connection):
+
+    connection_settings_type = LocalFilesystemConnectionSettings
+
+    @classmethod
+    def connect(cls, gateway):
         """Connect to local filesystem"""
-        return pathlib.Path(pathlib.Path().absolute().root)
+        settings = gateway.connection_settings
+        cls._check_connection_settings_type(settings)
+
+        if settings.root_path:
+            return pathlib.Path(settings.root_path).absolute()
+        else:
+            return pathlib.Path(pathlib.Path().absolute().root)
 
     @classmethod
     def receive_inputs(cls, conn, path, message_selector):

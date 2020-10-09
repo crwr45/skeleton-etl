@@ -6,7 +6,10 @@ import pytest
 
 from skeleton_etl.models.gateway import Gateway
 from skeleton_etl.models.transfer import Transfer
-from skeleton_etl.connections.filesystem import LocalFilesystemConnection
+from skeleton_etl.connections.filesystem import (
+    LocalFilesystemConnection,
+    LocalFilesystemConnectionSettings,
+)
 from skeleton_etl.selection_policies.all import SelectionPolicyAll
 
 from skeleton_etl.message_types.product_demo import ProductMessage
@@ -27,7 +30,7 @@ def register_product_demo_type():
 def gateway(register_product_demo_type):
     return Gateway(
         path=str(DATA_DIR),
-        address=None,
+        connection_settings=LocalFilesystemConnectionSettings(),
         connection_type=LocalFilesystemConnection,
         message_selection_policy=SelectionPolicyAll,
     )

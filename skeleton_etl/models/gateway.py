@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Any, List, Union
+from typing import Any, List, Dict
 
 from .transfer import Transfer
 from ..stores.abstract import AbstractStore
@@ -14,7 +14,7 @@ class Gateway:
     """
 
     path: str
-    address: Union[str, None]
+    connection_settings: Dict[str, Any]
     connection_type: Any
     message_selection_policy: Any
     transfers: AbstractStore = field(default_factory=InMemoryStore)
