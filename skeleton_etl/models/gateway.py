@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Any, List, Dict
+from typing import Any, Dict
 
 from .transfer import Transfer
 from ..stores.abstract import AbstractStore
@@ -20,7 +20,7 @@ class Gateway:
     transfers: AbstractStore = field(default_factory=InMemoryStore)
 
     # TODO: auth for types that need it.
-    # TODO: Odoo EDI has the concept of multiple paths for a single gateway. Consider
+    # TODO: Odoo EDI has the concept of multiple paths for a single gateway.
 
     def do_transfer(self):
         """

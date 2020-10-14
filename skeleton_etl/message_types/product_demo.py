@@ -4,6 +4,7 @@ from io import StringIO
 from .abstract import MessageType
 
 import logging
+
 _logger = logging.getLogger(__name__)
 
 

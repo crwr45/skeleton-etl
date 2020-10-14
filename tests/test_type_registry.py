@@ -1,5 +1,4 @@
 from csv import DictReader
-from skeleton_etl.message_types.type_registry import EntryNotFoundError
 import pytest
 
 from skeleton_etl.message_types import type_registry

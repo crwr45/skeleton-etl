@@ -1,9 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any, List, Union
-
-from .message import Message
-from ..message_types.product_demo import ProductMessage
+from typing import Any
 
 from ..message_types import type_registry
 from ..stores.abstract import AbstractStore
@@ -42,8 +39,14 @@ class Transfer:
     def receive_inputs(self, connection):
         Connection = self.gateway.connection_type
         SelectionPolicy = self.gateway.message_selection_policy
-        for message in Connection.receive_inputs(connection, self.gateway.path, SelectionPolicy):
+        for message in Connection.receive_inputs(
+            connection, self.gateway.path, SelectionPolicy
+        ):
             message.type = type_registry.find_type_for_message(message)
-            _logger.debug(f"Determined type {message.type} for message {message.name}")
+            _logger.debug(
+                f"Determined type {message.type} for " "message {message.name}"
+            )
             self.messages.add(message)
-        _logger.debug(f"transfer at {self.timestamp} got {len(self.messages)} new messages")
+        _logger.debug(
+            f"transfer at {self.timestamp} got {len(self.messages)} new messages"
+        )
