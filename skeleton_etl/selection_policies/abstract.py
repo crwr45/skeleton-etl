@@ -2,8 +2,8 @@ from abc import ABC, abstractstaticmethod
 
 from ..models.message import Message
 
-class SelectionPolicy(ABC):
 
+class SelectionPolicy(ABC):
     @abstractstaticmethod
     def message_selected(possible_message: Message) -> bool:
         """

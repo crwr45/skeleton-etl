@@ -2,8 +2,8 @@ from abc import ABC, abstractstaticmethod
 
 from ..models.message import Message
 
+
 class MessageType(ABC):
-    
     @abstractstaticmethod
     def message_is_type(message: Message) -> bool:
         """

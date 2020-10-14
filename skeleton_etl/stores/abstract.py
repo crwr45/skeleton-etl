@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, TypeVar, List, Iterator
+from typing import TypeVar, List, Iterator
 
 # Define some generic types
 T = TypeVar("T")
@@ -35,10 +35,14 @@ class AbstractStore(ABC):
 
     @abstractmethod
     def load(self, **kwargs) -> None:
-        """Load data from external persistance mechanism. Args will vary with mechanism"""
+        """Load data from external persistance mechanism. Args will vary with
+        mechanism
+        """
         pass
 
     @abstractmethod
     def dump(self) -> List[T]:
-        """Returns a list of the values stored to allow for values to be persisted elsewhere"""
+        """Returns a list of the values stored to allow for values to be
+        persisted elsewhere
+        """
         return list(self)

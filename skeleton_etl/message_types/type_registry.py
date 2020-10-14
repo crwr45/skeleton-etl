@@ -6,6 +6,7 @@ from .abstract import MessageType
 from ..models.message import Message
 
 import logging
+
 _logger = logging.getLogger(__name__)
 
 
@@ -25,8 +26,7 @@ def register_type(new_type: Type[MessageType], priority):
 
     if qual_name in registry:
         raise KeyError(f"{qual_name} is already registered")
-    if not hasattr(new_type, "message_is_type") or \
-        not hasattr(new_type, "prepare"):
+    if not hasattr(new_type, "message_is_type") or not hasattr(new_type, "prepare"):
         raise TypeError(f"{new_type} does not have required methods")
 
     registry.append(qual_name)
@@ -34,7 +34,6 @@ def register_type(new_type: Type[MessageType], priority):
     sorted_types.sort(key=lambda i: i[0])
 
     _logger.debug(f"current registry: {registry}")
-
 
 
 def find_type_for_message(message: Message) -> Type[MessageType]:
